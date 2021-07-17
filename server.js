@@ -90,15 +90,6 @@ app.get("/:course/:room", async(req, res) => {
       }
   }});
 
-io.on("connection", (socket) => {
-  socket.on("join-room", (roomId, userId, userName) => {
-    socket.join(roomId);
-    socket.to(roomId).broadcast.emit("user-connected", userId);
-    socket.on("message", (message) => {
-      io.to(roomId).emit("createMessage", message, userName);
-    });
-  });
-});
 
  mongoose.connect(process.env.MONGODB_URI)
    .then(() => console.log('Connected to Mongodb...'))
